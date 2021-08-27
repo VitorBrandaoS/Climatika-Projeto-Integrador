@@ -29,12 +29,13 @@ public class Produto {
 	
 	@NotBlank
 	@Size(max = 50)
-	private String categoria_mae;
+	private String categoriaMae;
 	
 	@NotBlank
 	@Size(max = 50)
-	private String categoria_filha;
+	private String categoriaFilha;
 
+	private Long user;
 	
 	//gets e sets
 	public Long getCodigo() {
@@ -69,19 +70,29 @@ public class Produto {
 		this.preco = preco;
 	}
 
-	public String getCategoria_mae() {
-		return categoria_mae;
+	public String getCategoriaMae() {
+		return categoriaMae;
 	}
 
-	public void setCategoria_mae(String categoria_mae) {
-		this.categoria_mae = categoria_mae;
+	public void setCategoriaMae(String categoriaMae) {
+		this.categoriaMae = categoriaMae;
 	}
 
-	public String getCategoria_filha() {
-		return categoria_filha;
+	public String getCategoriaFilha() {
+		return categoriaFilha;
 	}
 
-	public void setCategoria_filha(String categoria_filha) {
-		this.categoria_filha = categoria_filha;
+	public void setCategoriaFilha(String categoriaFilha) {
+		this.categoriaFilha = categoriaFilha;
 	}
+
+	public Long getUser() {
+		return user;
+	}
+
+	public void setUser(Long user) {
+		this.user = user;
+	}
+	
+	
 }
