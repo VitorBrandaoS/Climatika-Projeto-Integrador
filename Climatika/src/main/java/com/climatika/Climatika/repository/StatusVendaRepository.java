@@ -10,6 +10,6 @@ public interface StatusVendaRepository extends JpaRepository<StatusVenda, Long>{
 	
 	List<StatusVenda> findAllByIdUsuarioContainingIgnoreCase(String idUsuario);
 	List<StatusVenda> findAllByStatusContainingIgnoreCase(String status);
-	List<StatusVenda> findAllByCodigoProdutoContainingIgnoreCase(Long codigoProduto);
+	List<StatusVenda> findAllByCodigoProdutoContaining(Long codigoProduto);
 
 }

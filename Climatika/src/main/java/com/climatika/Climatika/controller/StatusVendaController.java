@@ -2,7 +2,6 @@ package com.climatika.Climatika.controller;
 
 import java.util.List;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class StatusVendaController {
 	
 	@GetMapping("/busca/codigo/{codigoProduto}")
 	public ResponseEntity<List<StatusVenda>> getAllByCodigo(@PathVariable(value = "codigoProduto") Long searchCod) {
-		List<StatusVenda> codigoBuscado = repositoryStatus.findAllByCodigoProdutoContainingIgnoreCase(searchCod);
+		List<StatusVenda> codigoBuscado = repositoryStatus.findAllByCodigoProdutoContaining(searchCod);
 		
 		if(codigoBuscado.isEmpty())
 			return ResponseEntity.status(204).build();
