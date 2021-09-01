@@ -9,4 +9,6 @@ import com.climatika.Climatika.models.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 
 	List<Produto> findAllByNomeProdutoContainingIgnoreCase(String nomeProduto);
+	List<Produto> findAllByCategoriaMaeContainingIgnoreCase(String categoriaMae);
+	List<Produto> findAllByCategoriaFilhaContainingIgnoreCase(String categoriaFilha);
 }

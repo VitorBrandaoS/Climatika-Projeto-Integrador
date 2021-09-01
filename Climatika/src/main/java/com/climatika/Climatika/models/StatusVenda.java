@@ -22,7 +22,9 @@ public class StatusVenda {
 	private Long codigoProduto;
 	@NotBlank
 	private String status;
-
+	
+	
+	//getters and setters
 	public Long getId() {
 		return id;
 	}

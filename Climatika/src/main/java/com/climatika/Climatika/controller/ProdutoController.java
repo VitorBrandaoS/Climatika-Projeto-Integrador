@@ -39,16 +39,38 @@ public class ProdutoController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/buscaNome/{nome}")
+	@GetMapping("/busca/nome/{nome}")
 	public ResponseEntity<List<Produto>> getAllByNome(@PathVariable(value = "nome") String searchNome) {
 		List<Produto> produtosBuscados = repositoryProduct.findAllByNomeProdutoContainingIgnoreCase(searchNome);
+		
 		if (produtosBuscados.isEmpty()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.noContent().build();
 		} 
 		else {
 			return ResponseEntity.ok().body(produtosBuscados);
-		}	
+		}				
 	}
+	
+	@GetMapping("/categoria/{categoriaMae}")
+	public ResponseEntity<List<Produto>> getAllByMae(@PathVariable(value = "categoriaMae") String searchMae) {
+		List<Produto> produtosMae = repositoryProduct.findAllByCategoriaMaeContainingIgnoreCase(searchMae);
+		
+		if (produtosMae.isEmpty())
+			return ResponseEntity.status(204).build();
+		else
+			return ResponseEntity.status(200).build();
+	}
+	
+	@GetMapping("/categoria/subcategoria/{categoriaFilha}")
+	public ResponseEntity<List<Produto>> getAllByFilha(@PathVariable(value = "categoriaFilha") String searchFilha) {
+		List<Produto> produtosFilha = repositoryProduct.findAllByCategoriaFilhaContainingIgnoreCase(searchFilha);
+		
+		if (produtosFilha.isEmpty())
+			return ResponseEntity.status(204).build();
+		else
+			return ResponseEntity.status(200).build();
+	}
+	
 	@PostMapping
 	public ResponseEntity<Produto> newProduct(@Valid @RequestBody Produto addProduct) {
 		return ResponseEntity.status(201).body(repositoryProduct.save(addProduct));
