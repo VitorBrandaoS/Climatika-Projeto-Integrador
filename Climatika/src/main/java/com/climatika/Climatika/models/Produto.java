@@ -18,7 +18,7 @@ public class Produto {
 	
 	@NotBlank
 	@Size(min = 3, max = 50)
-	private String nome;
+	private String nomeProduto;
 	
 	@NotBlank
 	@Size(max = 30)
@@ -46,12 +46,13 @@ public class Produto {
 		this.codigo = codigo;
 	}
 
-	public String getNome() {
-		return nome;
+	
+	public String getNomeProduto() {
+		return nomeProduto;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeProduto(String nomeProduto) {
+		this.nomeProduto = nomeProduto;
 	}
 
 	public String getMarca() {

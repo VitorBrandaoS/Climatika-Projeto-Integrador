@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import com.sun.istack.NotNull;
 
 @Entity 
 @Table(name = "tb_status_venda")
@@ -13,13 +16,15 @@ public class StatusVenda {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@NotBlank
 	private String idUsuario;
-	
+	@NotNull
 	private Long codigoProduto;
-	
+	@NotBlank
 	private String status;
-
+	
+	
+	//getters and setters
 	public Long getId() {
 		return id;
 	}
