@@ -1,9 +1,12 @@
 package com.climatika.Climatika.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -34,9 +37,11 @@ public class Produto {
 	@NotBlank
 	@Size(max = 50)
 	private String categoriaFilha;
-
-	private Long user;
-	
+/*
+	@ManyToOne
+	private Usuario user;
+	@ManyToOne
+	private List <Produto> listProduct;*/
 	//gets e sets
 	public Long getCodigo() {
 		return codigo;
@@ -86,14 +91,16 @@ public class Produto {
 	public void setCategoriaFilha(String categoriaFilha) {
 		this.categoriaFilha = categoriaFilha;
 	}
-
-	public Long getUser() {
+/*
+	public Usuario getUser() {
 		return user;
 	}
 
-	public void setUser(Long user) {
+	public void setUser(Usuario user) {
 		this.user = user;
 	}
+
+       */
 	
 	
 }

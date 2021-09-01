@@ -38,7 +38,7 @@ public class StatusVendaController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/busca/codigo/{codigoProduto}")
+/*	@GetMapping("/busca/codigo/{codigoProduto}")
 	public ResponseEntity<List<StatusVenda>> getAllByCodigo(@PathVariable(value = "codigoProduto") Long searchCod) {
 		List<StatusVenda> codigoBuscado = repositoryStatus.findAllByCodigoProdutoContaining(searchCod);
 		
@@ -56,7 +56,7 @@ public class StatusVendaController {
 			return ResponseEntity.status(204).build();
 		else
 			return ResponseEntity.status(200).build();
-	}	
+	}	*/
 	
 	@GetMapping("/busca/status/{status}")
 	public ResponseEntity<List<StatusVenda>> getAllByStatus(@PathVariable(value = "status") String searchStatus) {

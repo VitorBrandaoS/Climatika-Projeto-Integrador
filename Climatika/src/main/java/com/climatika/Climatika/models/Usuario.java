@@ -1,9 +1,13 @@
 package com.climatika.Climatika.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -44,7 +48,10 @@ public class Usuario {
 	private String estado;
 	@NotBlank
 	private String admin;
-	
+/*	@OneToMany
+	private List<Produto> userProduto;
+	@OneToOne
+	private StatusVenda userStatus;*/
 	//Getters and Setters
 	
 	public Long getId() {
@@ -113,7 +120,19 @@ public class Usuario {
 	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
-	
+  /*  public List<Produto> getUserProduto() {
+		return userProduto;
+	}
+	public void setUserProduto(List<Produto> userProduto) {
+		this.userProduto = userProduto;
+	}
+	public StatusVenda getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(StatusVenda userStatus) {
+		this.userStatus = userStatus;
+	}
+	  */
 	
 	
 }
