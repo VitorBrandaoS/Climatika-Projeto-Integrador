@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.climatika.Climatika.models.StatusVenda;
 import com.climatika.Climatika.repository.StatusVendaRepository;
 
-@Entity
+@RestController
 @RequestMapping("/climatika/Status")
 @CrossOrigin("*")
 public class StatusVendaController {
