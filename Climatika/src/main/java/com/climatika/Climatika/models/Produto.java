@@ -1,6 +1,5 @@
 package com.climatika.Climatika.models;
 
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_produto")
@@ -37,11 +38,12 @@ public class Produto {
 	@NotBlank
 	@Size(max = 50)
 	private String categoriaFilha;
-/*
+	
 	@ManyToOne
-	private Usuario user;
-	@ManyToOne
-	private List <Produto> listProduct;*/
+	@JsonIgnoreProperties ("codigoProduto")
+	private StatusVenda statusVenda;
+	
+	
 	//gets e sets
 	public Long getCodigo() {
 		return codigo;
@@ -78,7 +80,7 @@ public class Produto {
 
 	public String getCategoriaMae() {
 		return categoriaMae;
-	}
+	} 
 
 	public void setCategoriaMae(String categoriaMae) {
 		this.categoriaMae = categoriaMae;
@@ -91,16 +93,14 @@ public class Produto {
 	public void setCategoriaFilha(String categoriaFilha) {
 		this.categoriaFilha = categoriaFilha;
 	}
-/*
-	public Usuario getUser() {
-		return user;
+
+	public StatusVenda getStatus() {
+		return statusVenda;
 	}
 
-	public void setUser(Usuario user) {
-		this.user = user;
+	public void setStatusVenda(StatusVenda statusVenda) {
+		this.statusVenda = statusVenda;
 	}
 
-       */
-	
 	
 }

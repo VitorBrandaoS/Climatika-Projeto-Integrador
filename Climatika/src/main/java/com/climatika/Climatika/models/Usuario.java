@@ -2,18 +2,20 @@ package com.climatika.Climatika.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -23,35 +25,44 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@CPF
 	private String cpf;
+	
 	@NotBlank
 	@Size(max = 50)
 	private String nomeCompleto;
+	
 	@Email
 	private String email;
+	
 	@NotBlank
 	@Size(min = 6, max = 15)
 	private String senha;
+	
 	@Size(min = 11, max = 11)
 	private String celular;
+	
 	@Size(min = 10, max = 10)
 	private String telefone;
+	
 	@NotBlank
 	@Size(max = 50)
 	private String endereco;
+	
 	@NotBlank
 	@Size(max = 30)
 	private String cidade;
+	
 	@NotBlank
 	@Size(min = 2, max = 2)
 	private String estado;
-	@NotBlank
-	private String admin;
-/*	@OneToMany
-	private List<Produto> userProduto;
-	@OneToOne
-	private StatusVenda userStatus;*/
+	
+	@OneToMany(mappedBy = "idUsuario", cascade =  CascadeType.REMOVE)
+	@JsonIgnoreProperties("idUsuario")
+	private List<StatusVenda> userStatus;
+	
+	
 	//Getters and Setters
 	
 	public Long getId() {
@@ -114,25 +125,5 @@ public class Usuario {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getAdmin() {
-		return admin;
-	}
-	public void setAdmin(String admin) {
-		this.admin = admin;
-	}
-  /*  public List<Produto> getUserProduto() {
-		return userProduto;
-	}
-	public void setUserProduto(List<Produto> userProduto) {
-		this.userProduto = userProduto;
-	}
-	public StatusVenda getUserStatus() {
-		return userStatus;
-	}
-	public void setUserStatus(StatusVenda userStatus) {
-		this.userStatus = userStatus;
-	}
-	  */
-	
 	
 }

@@ -24,57 +24,45 @@ import com.climatika.Climatika.repository.UsuarioRepository;
 @RequestMapping("/climatika/usuario")
 @CrossOrigin("*")
 public class UsuarioController {
-	
-	@Autowired UsuarioRepository repositoryUser;
-	
+
+	@Autowired
+	UsuarioRepository repositoryUser;
+
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAllUsers() {
 		return ResponseEntity.ok(repositoryUser.findAll());
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> getByUserId(@PathVariable(value = "id") Long searchId) {
 		return repositoryUser.findById(searchId).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@GetMapping("/cpf/{cpf}")
 	public ResponseEntity<List<Usuario>> getByCpf(@PathVariable(value = "cpf") String searchCpf) {
 		List<Usuario> cpfBuscado = repositoryUser.findAllByCpfContainingIgnoreCase(searchCpf);
-		
+
 		if (cpfBuscado.isEmpty()) {
 			return ResponseEntity.noContent().build();
-		}
-		else {
+		} else {
 			return ResponseEntity.ok().body(cpfBuscado);
 		}
 	}
-	
-	@GetMapping("/admin/{admin}")
-	public ResponseEntity<List<Usuario>> getAdmins(@PathVariable(value = "admin") String searchadmin) {
-		List<Usuario> viewAdmin = repositoryUser.findAllByAdminContainingIgnoreCase(searchadmin);
-		
-		if (viewAdmin.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		else {
-			return ResponseEntity.ok().body(viewAdmin);
-		}
+
+	@PostMapping
+	public ResponseEntity<Usuario> newUser(@Valid @RequestBody Usuario addUser) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(addUser));
+
 	}
-	
-	    @PostMapping 
-	    public ResponseEntity<Usuario> newUser(@Valid @RequestBody Usuario addUser){
-	    	return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(addUser));
-	    	
-	    }
-	    
-	    @PutMapping
-	    public ResponseEntity<Usuario> updateUser(@Valid @RequestBody Usuario upUser){
-	    	return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(upUser));
-	    }
-	    
-	    @DeleteMapping("/{id}")
-	    public void deleteUser(@PathVariable(value = "id") Long idUser){
-	    	repositoryUser.deleteById(idUser);
-	    }
+
+	@PutMapping
+	public ResponseEntity<Usuario> updateUser(@Valid @RequestBody Usuario upUser) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(upUser));
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteUser(@PathVariable(value = "id") Long idUser) {
+		repositoryUser.deleteById(idUser);
+	}
 }
