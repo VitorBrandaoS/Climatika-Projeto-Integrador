@@ -58,7 +58,7 @@ public class ProdutoController {
 		if (produtosMae.isEmpty())
 			return ResponseEntity.status(204).build();
 		else
-			return ResponseEntity.status(200).build();
+			return ResponseEntity.status(200).body(produtosMae);
 	}
 	
 	@GetMapping("/categoria/subcategoria/{categoriaFilha}")
@@ -68,7 +68,7 @@ public class ProdutoController {
 		if (produtosFilha.isEmpty())
 			return ResponseEntity.status(204).build();
 		else
-			return ResponseEntity.status(200).build();
+			return ResponseEntity.status(200).body(produtosFilha);
 	}
 	
 	@PostMapping
