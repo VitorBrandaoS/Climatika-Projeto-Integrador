@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "tb_produto")
@@ -28,7 +29,7 @@ public class Produto {
 	@Size(max = 30)
 	private String marca;
 	
-	@NotBlank
+	@NotNull
 	private float preco;
 	
 	@NotBlank
