@@ -1,11 +1,14 @@
 package com.climatika.Climatika.models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -40,12 +43,12 @@ public class Produto {
 	@Size(max = 50)
 	private String categoriaFilha;
 	
-	@ManyToOne
-	@JsonIgnoreProperties ("codigoProduto")
-	private StatusVenda statusVenda;
-	
+	@ManyToMany
+	@JsonIgnoreProperties ({"listaStatusVenda"})
+	private  List<StatusVenda> listaStatusVenda = new ArrayList<>();
 	
 	//gets e sets
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -54,7 +57,6 @@ public class Produto {
 		this.codigo = codigo;
 	}
 
-	
 	public String getNomeProduto() {
 		return nomeProduto;
 	}
@@ -81,7 +83,7 @@ public class Produto {
 
 	public String getCategoriaMae() {
 		return categoriaMae;
-	} 
+	}
 
 	public void setCategoriaMae(String categoriaMae) {
 		this.categoriaMae = categoriaMae;
@@ -95,13 +97,14 @@ public class Produto {
 		this.categoriaFilha = categoriaFilha;
 	}
 
-	public StatusVenda getStatus() {
-		return statusVenda;
+	public List<StatusVenda> getListaStatusVenda() {
+		return listaStatusVenda;
 	}
 
-	public void setStatusVenda(StatusVenda statusVenda) {
-		this.statusVenda = statusVenda;
+	public void setListaStatusVenda(List<StatusVenda> listaStatusVenda) {
+		this.listaStatusVenda = listaStatusVenda;
 	}
-
+	
+	
 	
 }

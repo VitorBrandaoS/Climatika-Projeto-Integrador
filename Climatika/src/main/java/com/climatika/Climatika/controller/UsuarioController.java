@@ -26,7 +26,7 @@ import com.climatika.Climatika.repository.UsuarioRepository;
 public class UsuarioController {
 
 	@Autowired
-	UsuarioRepository repositoryUser;
+	private UsuarioRepository repositoryUser;
 
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAllUsers() {

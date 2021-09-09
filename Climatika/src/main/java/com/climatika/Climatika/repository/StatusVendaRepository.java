@@ -9,8 +9,8 @@ import com.climatika.Climatika.models.StatusVenda;
 @Repository
 public interface StatusVendaRepository extends JpaRepository<StatusVenda, Long>{
 	
- //	List<StatusVenda> findAllByIdUsuarioContainingIgnoreCase(String idUsuario);
+	List<StatusVenda> findAllByIdUsuarioContaining(Long idUsuario);
 	List<StatusVenda> findAllByStatusContainingIgnoreCase(String status);
-//	List<StatusVenda> findAllByCodigoProdutoContaining(Long codigoProduto);
+	List<StatusVenda> findAllByListaProdutoContaining(Long codigoProduto);
 
 }
