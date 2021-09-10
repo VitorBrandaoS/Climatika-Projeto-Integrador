@@ -6,22 +6,25 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.climatika.Climatika.models.Usuario;
+
 public class UserDetailsImpl implements UserDetails{
 
-	private static final Long serialVersionlUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	private String email;
 	private String password;
-	private List<GrantedAuthority> authorization;
+	private List<GrantedAuthority> authorities;
 
-	public UserDetailsImpl(String email, String password) {
+	public UserDetailsImpl(Usuario usuario) {
 		this.email = email;
 		this.password = password;
 	}
 
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorization;
+		return authorities;
 	}
 
 	@Override
