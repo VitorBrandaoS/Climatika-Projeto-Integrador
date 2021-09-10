@@ -26,8 +26,9 @@ import com.climatika.Climatika.repository.ProdutoRepository;
 public class ProdutoController {
 
 	@Autowired
-	ProdutoRepository repositoryProduct;
-
+	private ProdutoRepository repositoryProduct;
+		
+	
 	@GetMapping
 	public ResponseEntity<List<Produto>> getAllProducts() {
 		return ResponseEntity.ok(repositoryProduct.findAll());
@@ -41,7 +42,9 @@ public class ProdutoController {
 
 	@GetMapping("/busca/nome/{nome}")
 	public ResponseEntity<List<Produto>> getAllByNome(@PathVariable(value = "nome") String searchNome) {
+		
 		List<Produto> produtosBuscados = repositoryProduct.findAllByNomeProdutoContainingIgnoreCase(searchNome);
+		
 		
 		if (produtosBuscados.isEmpty()) {
 			return ResponseEntity.noContent().build();
@@ -74,7 +77,7 @@ public class ProdutoController {
 	@PostMapping
 	public ResponseEntity<Produto> newProduct(@Valid @RequestBody Produto addProduct) {
 		return ResponseEntity.status(201).body(repositoryProduct.save(addProduct));
-	}
+	}	
 	
 	@PutMapping
 	public ResponseEntity<Produto> updateProduct(@Valid @RequestBody Produto upProduct)	{ 

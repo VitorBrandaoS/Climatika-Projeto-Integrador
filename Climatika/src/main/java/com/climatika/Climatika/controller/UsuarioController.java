@@ -26,7 +26,7 @@ import com.climatika.Climatika.repository.UsuarioRepository;
 public class UsuarioController {
 
 	@Autowired
-	UsuarioRepository repositoryUser;
+	private UsuarioRepository repositoryUser;
 
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAllUsers() {
@@ -50,7 +50,7 @@ public class UsuarioController {
 		}
 	}
 
-	@PostMapping
+	/*@PostMapping
 	public ResponseEntity<Usuario> newUser(@Valid @RequestBody Usuario addUser) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(addUser));
 
@@ -59,7 +59,7 @@ public class UsuarioController {
 	@PutMapping
 	public ResponseEntity<Usuario> updateUser(@Valid @RequestBody Usuario upUser) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(upUser));
-	}
+	}*/
 
 	@DeleteMapping("/{id}")
 	public void deleteUser(@PathVariable(value = "id") Long idUser) {

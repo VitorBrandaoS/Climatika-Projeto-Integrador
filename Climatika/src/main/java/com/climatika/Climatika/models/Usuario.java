@@ -1,5 +1,6 @@
 package com.climatika.Climatika.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,14 +38,11 @@ public class Usuario {
 	private String email;
 	
 	@NotBlank
-	@Size(min = 6, max = 15)
+	@Size(min = 5)
 	private String senha;
 	
 	@Size(min = 11, max = 11)
 	private String celular;
-	
-	@Size(min = 10, max = 10)
-	private String telefone;
 	
 	@NotBlank
 	@Size(max = 50)
@@ -59,71 +57,90 @@ public class Usuario {
 	private String estado;
 	
 	@OneToMany(mappedBy = "idUsuario", cascade =  CascadeType.REMOVE)
-	@JsonIgnoreProperties("idUsuario")
-	private List<StatusVenda> userStatus;
-	
-	
+	@JsonIgnoreProperties({"idUsuario", "listaProduto"})
+	private List<StatusVenda> userStatusVendas = new ArrayList<>();
+
 	//Getters and Setters
 	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
+
 	public void setNomeCompleto(String nomeCompleto) {
 		this.nomeCompleto = nomeCompleto;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getSenha() {
 		return senha;
 	}
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
 	public String getCelular() {
 		return celular;
 	}
+
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+
 	public String getEndereco() {
 		return endereco;
 	}
+
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+
 	public String getCidade() {
 		return cidade;
 	}
+
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+
 	public String getEstado() {
 		return estado;
 	}
+
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+
+	public List<StatusVenda> getUserStatusVendas() {
+		return userStatusVendas;
+	}
+
+	public void setUserStatusVendas(List<StatusVenda> userStatusVendas) {
+		this.userStatusVendas = userStatusVendas;
+	}
+
 	
 }
