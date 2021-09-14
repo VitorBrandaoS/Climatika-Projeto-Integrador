@@ -45,7 +45,7 @@ public class Usuario {
 	private String celular;
 	
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 200)
 	private String endereco;
 	
 	@NotBlank

@@ -1,6 +1,7 @@
 package com.climatika.Climatika.Service;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.codec.binary.Base64;
@@ -18,13 +19,18 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Usuario CadastrarUsuario(Usuario usuario) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		String senhaEnconder = encoder.encode(usuario.getSenha());
-		usuario.setSenha(senhaEnconder);
-		
-		return repository.save(usuario);
+	public Optional<Object> CadastrarUsuario(Usuario usuario) {
+		Optional<?> user = repository.findByEmail(usuario.getEmail());
+		if (user.isPresent()){
+			return Optional.empty();
+		}else {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			String senhaEnconder = encoder.encode(usuario.getSenha());
+			usuario.setSenha(senhaEnconder);
+
+			return Optional.ofNullable(repository.save(usuario));
+		}
 	}
 	
 	public Optional<UsuarioLogin> Logar(Optional<UsuarioLogin> user){
