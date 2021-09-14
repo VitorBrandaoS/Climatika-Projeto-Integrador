@@ -20,19 +20,19 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("br.org.generation.blogpessoal.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.climatika.Climatika.controller"))
 				.paths(PathSelectors.any()).build().apiInfo(metadata()).useDefaultResponseMessages(false)
 				.globalResponses(HttpMethod.GET, responseMessageForGET());
 	}
 
 	public static ApiInfo metadata() {
-		return new ApiInfoBuilder().title("API - Blog Pessoal").description("Projeto API Spring - Blog Pessoal")
+		return new ApiInfoBuilder().title("API - Climatika").description("Projeto API Spring - Projeto Integrador")
 				.version("1.0.0").license("Apache License Version 2.0").licenseUrl("http://localhost:8080/swagger-ui/")
 				.contact(contact()).build();
 	}
 
 	private static Contact contact() {
-		return new Contact("Rafael Queiróz", "https://github.com/rafaelq80", "rafaelproinfo@gmail.com");
+		return new Contact("Agatha Nara, Isaias Rodrigues, Jaqueline Ferreira, Mayara Bueno, Rodrigo Silva, Vitor Brandão", "https://github.com/VitorBrandaoS/Climatika-Projeto-Integrador", "https://github.com/VitorBrandaoS/Climatika-Projeto-Integrador#readme");
 	}
 
 	private static List<Response> responseMessageForGET() {
