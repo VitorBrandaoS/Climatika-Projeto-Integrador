@@ -73,7 +73,6 @@ public class StatusVendaController {
 			return ResponseEntity.status(200).build();
 	}
 	
-
 	@PostMapping("/add")
 	public ResponseEntity<StatusVenda> newStatus(@Valid @RequestBody StatusVenda addStatus) {
 		return ResponseEntity.status(201).body(repositoryStatus.save(addStatus));
@@ -82,19 +81,24 @@ public class StatusVendaController {
 	//Adiciona um produto na lista de compras do usuario referente aquele pedido que está em andamento.
 
 	@PostMapping("/add/produto/{id_produto}/{id_status_venda}")
-	public ResponseEntity<StatusVenda> newProduct(@PathVariable(value = "id_produto") Long idProduto,
+	public ResponseEntity<?> newProduct(@PathVariable(value = "id_produto") Long idProduto,
 			@PathVariable(value = "id_status_venda") Long idStatusVenda) {
 		Optional<Produto> optionalProduto = repositoryProduct.findById(idProduto);
 		Optional<StatusVenda> optionalStatusVenda = repositoryStatus.findById(idStatusVenda);
 		
 		if(optionalProduto.isPresent() && optionalStatusVenda.isPresent()) {
-			optionalStatusVenda.get().getListaProduto().add(optionalProduto.get());		
-			
+			if (optionalStatusVenda.get().getListaProduto().contains(optionalProduto.get())) {
+				optionalProduto.get().setQuant(optionalProduto.get().getQuant() + 1L);
+			} else {
+				optionalProduto.get().setQuant(optionalProduto.get().getQuant() + 1L);
+				optionalStatusVenda.get().getListaProduto().add(optionalProduto.get());
+			}
+
 return ResponseEntity.status(201).body(repositoryStatus.save(optionalStatusVenda.get()));
 			
 		} else {
 			return ResponseEntity.status(400).build();
-		}	
+		}
 	}
 
 	@PutMapping

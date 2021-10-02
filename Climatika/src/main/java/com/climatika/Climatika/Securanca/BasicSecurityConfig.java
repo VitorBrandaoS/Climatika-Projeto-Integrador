@@ -21,6 +21,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userDetailsService);
+
+		auth.inMemoryAuthentication()
+				.withUser("admin")
+				.password(passwordEncoder().encode("admin"))
+				.authorities("ROLE_USER");
 	}
 	  
 	  @Bean
@@ -31,13 +36,14 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	  @Override
 	  protected void configure(HttpSecurity http) throws Exception{
 			http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/climatika/usuario/login").permitAll()
-			.antMatchers(HttpMethod.POST, "/climatika/usuario/cadastrar").permitAll()
-			.anyRequest().authenticated()
-			.and().httpBasic()
-		 	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		 	.and().cors()
-		 	.and().csrf().disable();
+					.antMatchers(HttpMethod.POST, "/climatika/usuario/login").permitAll()
+					.antMatchers(HttpMethod.POST, "/climatika/usuario/cadastrar").permitAll()
+					.antMatchers(HttpMethod.OPTIONS).permitAll()
+					.anyRequest().authenticated()
+					.and().httpBasic()
+					.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and().cors()
+					.and().csrf().disable();
 	  }
 
 }

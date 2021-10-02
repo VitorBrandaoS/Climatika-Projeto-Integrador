@@ -34,6 +34,9 @@ public class Produto {
 	
 	@NotNull
 	private float preco;
+
+	@NotNull
+	private Long quant = 0L;
 	
 	@NotBlank
 	@Size(max = 50)
@@ -104,7 +107,12 @@ public class Produto {
 	public void setListaStatusVenda(List<StatusVenda> listaStatusVenda) {
 		this.listaStatusVenda = listaStatusVenda;
 	}
-	
-	
-	
+
+	public Long getQuant() {
+		return quant;
+	}
+
+	public void setQuant(Long quant) {
+		this.quant = quant;
+	}
 }

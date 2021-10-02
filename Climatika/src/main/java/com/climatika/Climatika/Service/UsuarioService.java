@@ -19,8 +19,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Optional<Object> CadastrarUsuario(Usuario usuario) {
-		Optional<?> user = repository.findByEmail(usuario.getEmail());
+	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
+		Optional<Usuario> user = repository.findByEmail(usuario.getEmail());
 		if (user.isPresent()){
 			return Optional.empty();
 		}else {
@@ -46,8 +46,14 @@ public class UsuarioService {
 				String authHeader = "Basic " + new String(encodedAuth);
 				
 				user.get().setToken(authHeader);
-				user.get().setNomeCompleto(usuario.get().getNomeCompleto());
+				user.get().setEmail(usuario.get().getEmail());
 				user.get().setSenha(usuario.get().getSenha());
+				user.get().setId(usuario.get().getId());
+				user.get().setNomeCompleto(usuario.get().getNomeCompleto());
+				user.get().setCpf(usuario.get().getCpf());
+				user.get().setEndereco(usuario.get().getEndereco());
+				user.get().setCelular(usuario.get().getCelular());
+				user.get().setCidade(usuario.get().getCidade());
 				
 				return user;
 			}

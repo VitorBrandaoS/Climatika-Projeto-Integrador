@@ -1,9 +1,12 @@
 package com.climatika.Climatika.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.climatika.Climatika.Service.UsuarioService;
+import com.climatika.Climatika.models.UsuarioLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,9 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository repositoryUser;
 
+	@Autowired
+	private UsuarioService usuarioService;
+
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAllUsers() {
 		return ResponseEntity.ok(repositoryUser.findAll());
@@ -50,12 +56,24 @@ public class UsuarioController {
 		}
 	}
 
-	/*@PostMapping
-	public ResponseEntity<Usuario> newUser(@Valid @RequestBody Usuario addUser) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(addUser));
-
+	@PostMapping("/login")
+	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
+		return usuarioService.Logar(user).map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Usuario> Post(@RequestBody Usuario usuario) {
+		Optional<Usuario> user = usuarioService.CadastrarUsuario(usuario);
+		if (user.isEmpty()){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}else {
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(user.get());
+		}
+	}
+
+	/*
 	@PutMapping
 	public ResponseEntity<Usuario> updateUser(@Valid @RequestBody Usuario upUser) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(upUser));
