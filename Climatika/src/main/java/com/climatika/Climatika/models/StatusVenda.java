@@ -3,14 +3,7 @@ package com.climatika.Climatika.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,19 +16,22 @@ public class StatusVenda {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JoinColumn(name = "Venda")
 	private Long id;
-	
+
+	@OneToOne
+	@JoinColumn(name = "Usuario")
+	@JsonIgnoreProperties({"userStatusVendas", "senha", "endereco", "estado", "cidade"})
+	private Usuario idUsuario;
+	/*
 	@ManyToOne
 	@JoinColumn(name = "Usuario")
   	@JsonIgnoreProperties({"userStatusVendas", "senha", "endereco", "estado", "cidade"})
 	private Usuario idUsuario;
- 	
+ 	*/
  	@ManyToMany
 	@JsonIgnoreProperties({"userStatusVendas", "marca", "categoriaMae", "categoriaFilha", "listaStatusVenda"})
 	private  List<Produto> listaProduto = new ArrayList<>();
- 
-	
-	@NotBlank
-	private String status;
+
+	private String status = "aberto";
 
 
 	//getters and setters
@@ -77,8 +73,8 @@ public class StatusVenda {
 	public void setListaProduto(List<Produto> listaProduto) {
 		this.listaProduto = listaProduto;
 	}
-	
-	
-	
-	
+
+
+
+
 }

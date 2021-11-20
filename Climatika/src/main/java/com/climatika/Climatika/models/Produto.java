@@ -35,7 +35,7 @@ public class Produto {
 	@NotNull
 	private float preco;
 
-	@NotNull
+
 	private Long quant = 0L;
 	
 	@NotBlank
@@ -45,6 +45,12 @@ public class Produto {
 	@NotBlank
 	@Size(max = 50)
 	private String categoriaFilha;
+
+	@NotBlank
+	private String descricao;
+
+	@NotBlank
+	private String foto;
 	
 	@ManyToMany
 	@JsonIgnoreProperties ({"listaStatusVenda"})
@@ -114,5 +120,21 @@ public class Produto {
 
 	public void setQuant(Long quant) {
 		this.quant = quant;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 }

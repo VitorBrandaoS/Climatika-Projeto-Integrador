@@ -41,10 +41,14 @@ public class UsuarioController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> getByUserId(@PathVariable(value = "id") Long searchId) {
-		return repositoryUser.findById(searchId).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+		Optional<Usuario> user = repositoryUser.findById(searchId);
+		if (user.isEmpty()){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}else{
+			return ResponseEntity.status(HttpStatus.OK).body(user.get());
+		}
 	}
-
+/*
 	@GetMapping("/cpf/{cpf}")
 	public ResponseEntity<List<Usuario>> getByCpf(@PathVariable(value = "cpf") String searchCpf) {
 		List<Usuario> cpfBuscado = repositoryUser.findAllByCpfContainingIgnoreCase(searchCpf);
@@ -55,7 +59,7 @@ public class UsuarioController {
 			return ResponseEntity.ok().body(cpfBuscado);
 		}
 	}
-
+*/
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
 		return usuarioService.Logar(user).map(resp -> ResponseEntity.ok(resp))
@@ -84,11 +88,29 @@ public class UsuarioController {
 		}
 	}
 
-	/*
-	@PutMapping
-	public ResponseEntity<Usuario> updateUser(@Valid @RequestBody Usuario upUser) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryUser.save(upUser));
-	}*/
+	@PutMapping("/atualizar/senha")
+	public ResponseEntity<Usuario> atualizarSenha(@RequestBody Usuario user) {
+		Optional<Usuario> userExist = repositoryUser.findById(user.getId());
+		if (userExist.isPresent()){
+			return usuarioService.atualizarSenha(user).map(resp -> ResponseEntity.ok(resp))
+					.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+
+	@PutMapping("/atualizar/email")
+	public ResponseEntity<Usuario> atualizarEmail(@RequestBody Usuario user) {
+		Optional<Usuario> userExist = repositoryUser.findById(user.getId());
+		Optional<Usuario> userEmail = repositoryUser.findByEmail(user.getEmail());
+
+		if (userExist.isPresent() && userEmail.isEmpty()){
+			return usuarioService.atualizarEmail(user).map(resp -> ResponseEntity.ok(resp))
+					.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
 
 	@DeleteMapping("/{id}")
 	public void deleteUser(@PathVariable(value = "id") Long idUser) {

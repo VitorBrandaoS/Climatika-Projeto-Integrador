@@ -36,6 +36,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	  @Override
 	  protected void configure(HttpSecurity http) throws Exception{
 			http.authorizeRequests()
+					.antMatchers("/**").permitAll()
 					.antMatchers(HttpMethod.POST, "/climatika/usuario/login").permitAll()
 					.antMatchers(HttpMethod.POST, "/climatika/usuario/cadastrar").permitAll()
 					.antMatchers(HttpMethod.OPTIONS).permitAll()

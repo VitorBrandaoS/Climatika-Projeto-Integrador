@@ -3,13 +3,7 @@ package com.climatika.Climatika.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -26,21 +20,23 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	/*
 	@CPF
 	private String cpf;
-	
+	*/
 	@NotBlank
 	@Size(max = 50)
 	private String nomeCompleto;
-	
+
+	@NotBlank
 	@Email
 	private String email;
 	
 	@NotBlank
 	@Size(min = 5)
 	private String senha;
-	
+
+	@NotBlank
 	@Size(min = 11, max = 11)
 	private String celular;
 	
@@ -55,10 +51,19 @@ public class Usuario {
 	@NotBlank
 	@Size(min = 2, max = 2)
 	private String estado;
-	
+
+	private String tipoUsuario = "comum";
+
+	@OneToOne(mappedBy = "idUsuario", cascade =  CascadeType.REMOVE)
+	@JsonIgnoreProperties({"idUsuario", "listaProduto"})
+	private StatusVenda userStatusVendas;
+
+	/*
 	@OneToMany(mappedBy = "idUsuario", cascade =  CascadeType.REMOVE)
 	@JsonIgnoreProperties({"idUsuario", "listaProduto"})
 	private List<StatusVenda> userStatusVendas = new ArrayList<>();
+	*/
+
 
 	//Getters and Setters
 	
@@ -69,7 +74,7 @@ public class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	/*
 	public String getCpf() {
 		return cpf;
 	}
@@ -77,7 +82,7 @@ public class Usuario {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
+	*/
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
@@ -134,6 +139,7 @@ public class Usuario {
 		this.estado = estado;
 	}
 
+	/*
 	public List<StatusVenda> getUserStatusVendas() {
 		return userStatusVendas;
 	}
@@ -141,6 +147,21 @@ public class Usuario {
 	public void setUserStatusVendas(List<StatusVenda> userStatusVendas) {
 		this.userStatusVendas = userStatusVendas;
 	}
+	*/
 
-	
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
+	public StatusVenda getUserStatusVendas() {
+		return userStatusVendas;
+	}
+
+	public void setUserStatusVendas(StatusVenda userStatusVendas) {
+		this.userStatusVendas = userStatusVendas;
+	}
 }

@@ -18,6 +18,7 @@ public class UsuarioLogin {
 	private String endereco;
 	private String cidade;
 	private String estado;
+	private String tipoUsuario;
 	private String token;
 	
 	
@@ -84,8 +85,10 @@ public class UsuarioLogin {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
-	
-
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
 }

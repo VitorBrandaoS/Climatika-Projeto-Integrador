@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,7 +46,7 @@ public class StatusVendaController {
 
 	@GetMapping("/busca/codigo/{codigoProduto}")
 	public ResponseEntity<List<StatusVenda>> getAllByCodigo(@PathVariable(value = "codigoProduto") Long searchCod) {
-		List<StatusVenda> codigoBuscado = repositoryStatus.findAllByListaProdutoContaining(searchCod);
+		List<StatusVenda> codigoBuscado = repositoryStatus.findAllByListaProduto(searchCod);
 
 		if (codigoBuscado.isEmpty())
 			return ResponseEntity.status(204).build();
@@ -54,8 +55,8 @@ public class StatusVendaController {
 	}
 
 	@GetMapping("/busca/usuario/{idUsuario}")
-	public ResponseEntity<List<StatusVenda>> getAllByIdUsuario(@PathVariable(value = "IdUsuario") Long searchUser) {
-		List<StatusVenda> usuarioBuscado = repositoryStatus.findAllByIdUsuarioContaining(searchUser);
+	public ResponseEntity<List<StatusVenda>> getAllByIdUsuario(@PathVariable(value = "idUsuario") Long searchUser) {
+		List<StatusVenda> usuarioBuscado = repositoryStatus.findAllByIdUsuario(searchUser);
 
 		if (usuarioBuscado.isEmpty())
 			return ResponseEntity.status(204).build();
@@ -75,7 +76,7 @@ public class StatusVendaController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<StatusVenda> newStatus(@Valid @RequestBody StatusVenda addStatus) {
-		return ResponseEntity.status(201).body(repositoryStatus.save(addStatus));
+			return ResponseEntity.status(201).body(repositoryStatus.save(addStatus));
 	}
 	
 	//Adiciona um produto na lista de compras do usuario referente aquele pedido que está em andamento.
@@ -94,17 +95,60 @@ public class StatusVendaController {
 				optionalStatusVenda.get().getListaProduto().add(optionalProduto.get());
 			}
 
-return ResponseEntity.status(201).body(repositoryStatus.save(optionalStatusVenda.get()));
+			return ResponseEntity.status(201).body(repositoryStatus.save(optionalStatusVenda.get()));
 			
 		} else {
 			return ResponseEntity.status(400).build();
 		}
 	}
 
+	@PostMapping("/remove/produto/{id_produto}/{id_status_venda}")
+	public ResponseEntity<?> removeProduct(@PathVariable(value = "id_produto") Long idProduto,
+										@PathVariable(value = "id_status_venda") Long idStatusVenda) {
+		Optional<Produto> optionalProduto = repositoryProduct.findById(idProduto);
+		Optional<StatusVenda> optionalStatusVenda = repositoryStatus.findById(idStatusVenda);
+
+		if(optionalProduto.isPresent() && optionalStatusVenda.isPresent()) {
+			optionalProduto.get().setQuant(0L);
+			optionalStatusVenda.get().getListaProduto().remove(optionalProduto.get());
+			return ResponseEntity.status(201).body(repositoryStatus.save(optionalStatusVenda.get()));
+		} else {
+			return ResponseEntity.status(400).build();
+		}
+	}
+
+	@PostMapping("/limpa-carrinho/{idVenda}")
+	public ResponseEntity<StatusVenda> limpaCarrinho(@PathVariable(value = "idVenda") Long idVenda){
+		Optional<StatusVenda> statusVenda = repositoryStatus.findById(idVenda);
+		if(statusVenda.isPresent()) {
+
+			statusVenda.get().getListaProduto().clear();
+			return ResponseEntity.ok().body(repositoryStatus.save(statusVenda.get()));
+
+		}else {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@PostMapping("/calculo-total/{idVenda}")
+	public ResponseEntity<?> calculoTotal(@PathVariable(value = "idVenda") Long id){
+		Optional<StatusVenda> statusVenda = repositoryStatus.findById(id);
+		if(statusVenda.isPresent()) {
+			List<Produto> lista = statusVenda.get().getListaProduto();
+			float total = 0;
+			for(Produto a: lista) {
+				total += a.getPreco();
+			}
+			return ResponseEntity.ok().body(total);
+
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@PutMapping
 	public ResponseEntity<StatusVenda> updateStatus(@Valid @RequestBody StatusVenda upStatus) {
 		return ResponseEntity.status(200).body(repositoryStatus.save(upStatus));
-
 	}
 
 	@DeleteMapping("/{id}")
